@@ -28,6 +28,20 @@ const Step1_Cadastro: React.FC<StepProps> = ({ formData, onChange }) => {
                         <option>Ação Social</option>
                     </select>
                 </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700">Data de Início</label>
+                        <input type="date" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500" />
+                    </div>
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700">Data de Fim</label>
+                        <input type="date" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500" />
+                    </div>
+                </div>
+                <div>
+                    <label className="block text-sm font-medium text-gray-700">Regulamento</label>
+                    <textarea placeholder="Descreva as regras da sua rifa..." rows={4} className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"></textarea>
+                </div>
                  <div>
                     <label className="block text-sm font-medium text-gray-700">Imagem de Capa</label>
                      <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
@@ -42,6 +56,14 @@ const Step1_Cadastro: React.FC<StepProps> = ({ formData, onChange }) => {
                             </div>
                             <p className="text-xs text-gray-500">PNG, JPG, GIF até 10MB</p>
                         </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 className="text-lg font-medium text-gray-800 mt-4 mb-2">Prêmios</h3>
+                    <div className="space-y-2">
+                        <input type="text" placeholder="1º Prêmio" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500" />
+                        <input type="text" placeholder="2º Prêmio (Opcional)" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500" />
+                        <input type="text" placeholder="3º Prêmio (Opcional)" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500" />
                     </div>
                 </div>
             </div>

@@ -2,21 +2,21 @@ import React, { useState } from 'react';
 import { View } from './App';
 
 interface LoginPageProps {
-  onLoginAttempt: (user: string, pass: string) => boolean;
+  onLoginAttempt: (email: string, pass: string) => boolean;
   onNavigate: (view: View) => void;
 }
 
 const LoginPage: React.FC<LoginPageProps> = ({ onLoginAttempt, onNavigate }) => {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    const success = onLoginAttempt(username, password);
+    const success = onLoginAttempt(email, password);
     if (!success) {
-      setError('Usuário ou senha inválidos.');
+      setError('E-mail ou senha inválidos.');
     }
   };
 
@@ -32,16 +32,16 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLoginAttempt, onNavigate }) => 
             <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">Acessar Painel</h2>
             <form onSubmit={handleSubmit}>
                 <div className="mb-4">
-                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
-                        Usuário
+                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+                        E-mail
                     </label>
                     <input
                         className="shadow-sm appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                        id="username"
-                        type="text"
-                        placeholder="Seu usuário"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
+                        id="email"
+                        type="email"
+                        placeholder="admin@rifa10.com ou ana.silva@example.com"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                     />
                 </div>
                 <div className="mb-6">
@@ -52,7 +52,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLoginAttempt, onNavigate }) => 
                         className="shadow-sm appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:ring-2 focus:ring-emerald-500"
                         id="password"
                         type="password"
-                        placeholder="******************"
+                        placeholder="admin123 ou user123"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />

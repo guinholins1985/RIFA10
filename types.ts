@@ -1,3 +1,17 @@
+
+export interface Winner {
+  place: number;
+  buyerName: string;
+  ticketNumber: number;
+}
+
+export interface Participant {
+  userId?: number; // Added to link participant to user
+  buyerName: string;
+  ticketNumber: number;
+  paymentStatus: 'Pendente' | 'Pago' | 'Cancelado';
+}
+
 export interface Raffle {
   id: number;
   title: string;
@@ -7,6 +21,9 @@ export interface Raffle {
   goalAmount: number;
   ticketPrice: number;
   daysLeft: number;
+  status: 'Ativa' | 'Encerrada' | 'Sorteada' | 'Cancelada';
+  winners?: Winner[];
+  participants?: Participant[];
 }
 
 export interface Collaboration {
@@ -28,9 +45,13 @@ export interface User {
   id: number;
   name: string;
   email: string;
+  password?: string; // Added for login simulation
   role: 'Admin' | 'User';
   createdAt: string;
 }
+
+export type CurrentUser = Omit<User, 'password'>;
+
 
 export interface Category {
     id: number;

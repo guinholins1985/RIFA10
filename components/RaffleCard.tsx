@@ -1,16 +1,27 @@
 import React from 'react';
 import { Raffle } from '../types';
+import { ShareIcon } from '../Icons';
 
 interface RaffleCardProps {
   raffle: Raffle;
+  onShare: (raffle: Raffle) => void;
 }
 
-const RaffleCard: React.FC<RaffleCardProps> = ({ raffle }) => {
+const RaffleCard: React.FC<RaffleCardProps> = ({ raffle, onShare }) => {
   const progress = Math.min((raffle.raisedAmount / raffle.goalAmount) * 100, 100);
 
   return (
     <div className="bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden flex flex-col transition-transform duration-300 hover:transform hover:-translate-y-2">
-      <img src={raffle.imageUrl} alt={raffle.title} className="w-full h-56 object-cover" />
+      <div className="relative">
+        <img src={raffle.imageUrl} alt={raffle.title} className="w-full h-56 object-cover" />
+         <button 
+          onClick={(e) => { e.stopPropagation(); onShare(raffle); }}
+          className="absolute top-3 right-3 bg-white bg-opacity-70 p-2 rounded-full text-gray-700 hover:bg-opacity-100 hover:text-emerald-600 transition-all duration-300"
+          title="Compartilhar Rifa"
+        >
+          <ShareIcon className="h-5 w-5" />
+        </button>
+      </div>
       <div className="p-5 flex flex-col flex-grow">
         <span className="text-xs font-semibold bg-emerald-100 text-emerald-700 px-2 py-1 rounded-full self-start">{raffle.category}</span>
         <h3 className="text-lg font-bold text-gray-800 my-3 h-14">{raffle.title}</h3>

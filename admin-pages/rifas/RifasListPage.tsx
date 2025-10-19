@@ -1,13 +1,76 @@
-import React from 'react';
-// FIX: Corrected import paths from ../../../ to ../../ to correctly reference files from the root directory.
+import React, { useState } from 'react';
 import { RAFFLES } from '../../constants';
 import { Raffle } from '../../types';
+import { ShareIcon, TrashIcon, TrophyIcon, UsersGroupIcon } from '../../Icons';
+import RaffleParticipantsModal from './RaffleParticipantsModal';
+import DrawRaffleModal from './DrawRaffleModal';
+import WinnersModal from './WinnersModal';
+import ShareModal from '../../ShareModal';
 
 interface RifasListPageProps {
     onNavigateToCreate: () => void;
 }
 
 const RifasListPage: React.FC<RifasListPageProps> = ({ onNavigateToCreate }) => {
+    const [raffles, setRaffles] = useState<Raffle[]>(RAFFLES);
+    const [selectedRaffle, setSelectedRaffle] = useState<Raffle | null>(null);
+    const [isParticipantsModalOpen, setParticipantsModalOpen] = useState(false);
+    const [isDrawModalOpen, setDrawModalOpen] = useState(false);
+    const [isWinnersModalOpen, setWinnersModalOpen] = useState(false);
+    const [isShareModalOpen, setShareModalOpen] = useState(false);
+
+    const openParticipantsModal = (raffle: Raffle) => {
+        setSelectedRaffle(raffle);
+        setParticipantsModalOpen(true);
+    };
+
+    const openDrawModal = (raffle: Raffle) => {
+        setSelectedRaffle(raffle);
+        setDrawModalOpen(true);
+    };
+    
+    const openWinnersModal = (raffle: Raffle) => {
+        setSelectedRaffle(raffle);
+        setWinnersModalOpen(true);
+    };
+
+    const openShareModal = (raffle: Raffle) => {
+        setSelectedRaffle(raffle);
+        setShareModalOpen(true);
+    };
+
+    const handleDelete = (raffleId: number) => {
+        if (window.confirm("Tem certeza que deseja excluir esta rifa?")) {
+            setRaffles(raffles.filter(r => r.id !== raffleId));
+        }
+    };
+
+    const handleDrawConfirm = (raffleId: number) => {
+        setRaffles(raffles.map(r => {
+            if (r.id === raffleId) {
+                // Simulate drawing a winner from participants
+                const participants = r.participants || [];
+                if (participants.length > 0) {
+                    const winnerParticipant = participants[Math.floor(Math.random() * participants.length)];
+                    return { 
+                        ...r, 
+                        status: 'Sorteada', 
+                        winners: [{ place: 1, buyerName: winnerParticipant.buyerName, ticketNumber: winnerParticipant.ticketNumber }]
+                    };
+                }
+                return { ...r, status: 'Sorteada', winners: [] }; // No participants to draw from
+            }
+            return r;
+        }));
+    };
+    
+    const statusStyles: { [key in Raffle['status']]: string } = {
+        'Ativa': 'bg-green-100 text-green-800',
+        'Encerrada': 'bg-yellow-100 text-yellow-800',
+        'Sorteada': 'bg-blue-100 text-blue-800',
+        'Cancelada': 'bg-red-100 text-red-800',
+    };
+
     return (
         <div>
             <div className="flex justify-between items-center mb-6">
@@ -28,11 +91,11 @@ const RifasListPage: React.FC<RifasListPageProps> = ({ onNavigateToCreate }) => 
                             <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Arrecadação</th>
                             <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                             <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Dias Restantes</th>
-                            <th scope="col" className="relative px-6 py-3"><span className="sr-only">Ações</span></th>
+                            <th scope="col" className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
                         </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
-                        {RAFFLES.map((raffle: Raffle) => (
+                        {raffles.map((raffle: Raffle) => (
                             <tr key={raffle.id}>
                                 <td className="px-6 py-4 whitespace-nowrap">
                                     <div className="flex items-center">
@@ -50,20 +113,38 @@ const RifasListPage: React.FC<RifasListPageProps> = ({ onNavigateToCreate }) => 
                                     <div className="text-sm text-gray-500">{((raffle.raisedAmount / raffle.goalAmount) * 100).toFixed(0)}%</div>
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap">
-                                    <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                        Ativa
+                                    <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${statusStyles[raffle.status]}`}>
+                                        {raffle.status}
                                     </span>
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{raffle.daysLeft}</td>
-                                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <a href="#" className="text-emerald-600 hover:text-emerald-900 mr-4">Ver</a>
-                                    <a href="#" className="text-blue-600 hover:text-blue-900">Editar</a>
+                                <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+                                    <div className="flex items-center justify-center space-x-2">
+                                        <button onClick={() => openParticipantsModal(raffle)} className="text-gray-500 hover:text-blue-600" title="Ver Participantes"><UsersGroupIcon className="h-5 w-5"/></button>
+                                        {raffle.status === 'Encerrada' && <button onClick={() => openDrawModal(raffle)} className="bg-amber-500 text-white px-3 py-1 text-xs rounded-md hover:bg-amber-600">Sortear</button>}
+                                        {raffle.status === 'Sorteada' && <button onClick={() => openWinnersModal(raffle)} className="text-gray-500 hover:text-amber-500" title="Ver Ganhadores"><TrophyIcon className="h-5 w-5"/></button>}
+                                        <button onClick={() => openShareModal(raffle)} className="text-gray-500 hover:text-emerald-600" title="Compartilhar"><ShareIcon className="h-5 w-5"/></button>
+                                        <button onClick={() => handleDelete(raffle.id)} className="text-gray-500 hover:text-red-600" title="Excluir"><TrashIcon className="h-5 w-5"/></button>
+                                    </div>
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
             </div>
+            
+            <RaffleParticipantsModal isOpen={isParticipantsModalOpen} onClose={() => setParticipantsModalOpen(false)} raffle={selectedRaffle} />
+            <DrawRaffleModal isOpen={isDrawModalOpen} onClose={() => setDrawModalOpen(false)} raffle={selectedRaffle} onDrawConfirm={handleDrawConfirm} />
+            <WinnersModal isOpen={isWinnersModalOpen} onClose={() => setWinnersModalOpen(false)} raffle={selectedRaffle} />
+            {selectedRaffle && (
+                <ShareModal
+                    isOpen={isShareModalOpen}
+                    onClose={() => setShareModalOpen(false)}
+                    raffleTitle={selectedRaffle.title}
+                    raffleUrl={`https://rifa10.com/rifa/${selectedRaffle.id}`}
+                />
+            )}
+
         </div>
     );
 };
