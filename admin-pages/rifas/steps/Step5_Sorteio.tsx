@@ -8,6 +8,7 @@ interface StepProps {
 const Step5_Sorteio: React.FC<StepProps> = ({ formData, onChange }) => {
     return (
         <div>
+            {/* FIX: Corrected step number in heading */}
             <h2 className="text-2xl font-bold text-gray-700 mb-6">5. Sorteio</h2>
              <div className="space-y-4">
                 <div>

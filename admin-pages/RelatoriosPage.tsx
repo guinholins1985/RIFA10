@@ -4,7 +4,7 @@ const RelatoriosPage: React.FC = () => {
     return (
         <div className="p-6">
             <h1 className="text-2xl font-bold text-gray-800">Relatórios</h1>
-            <p className="mt-2 text-gray-600">Veja os relatórios de arrecadação aqui.</p>
+            <p className="mt-2 text-gray-600">Acesse os relatórios da plataforma aqui.</p>
         </div>
     );
 };

@@ -1,70 +1,39 @@
-import { Raffle } from './types';
+import { Raffle, Category, User, Collaboration, RankingEntry } from './types';
 
 export const RAFFLES: Raffle[] = [
-  {
-    id: 1,
-    title: 'RIFA10 - Smartwatch de Última Geração',
-    description: 'Criamos essa rifa para ajudar a associação família adota família, uma ong com três frentes principais.',
-    imageUrl: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&q=80',
-    category: 'Eletrônicos',
-    ticketPrice: 60.00,
-    raisedAmount: 15060,
-    goalAmount: 20000,
-    daysLeft: 32,
-  },
-  {
-    id: 2,
-    title: 'Rifa solidária para o tratamento da Mel',
-    description: 'O objetivo da rifa é ajudar um casal de amigos, que possui uma filhinha de apenas 1 ano e 2 meses.',
-    imageUrl: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&q=80',
-    category: 'Solidária',
-    ticketPrice: 20.00,
-    raisedAmount: 11400,
-    goalAmount: 20000,
-    daysLeft: 27,
-  },
-    {
-    id: 3,
-    title: 'Rifa solidária em prol do abrigo da apa uberlândia',
-    description: 'Ajude a manter mais de 500 animais resgatados alimentados, cuidados e protegidos.',
-    imageUrl: 'https://images.unsplash.com/photo-1592194991823-23ae41835355?w=500&q=80',
-    category: 'Animais de estimação',
-    ticketPrice: 10.00,
-    raisedAmount: 6010,
-    goalAmount: 15000,
-    daysLeft: 31,
-  },
-  {
-    id: 4,
-    title: 'Me ajude a representar o brasil no mundial na china',
-    description: 'A temporada 2025 tem sido bem intensa, e os custos mais ainda todos os treinos, coreografias, inscrições e viagens.',
-    imageUrl: 'https://images.unsplash.com/photo-1578849224342-1b1d3a4b3f3b?w=500&q=80',
-    category: 'Esporte e lazer',
-    ticketPrice: 10.00,
-    raisedAmount: 5000,
-    goalAmount: 5000,
-    daysLeft: 13,
-  },
-  {
-    id: 5,
-    title: 'Rifa solidária',
-    description: 'Descrição da rifa solidária – juntos pela paznossa igreja iniciou a construção de sua sede em 2014.',
-    imageUrl: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80',
-    category: 'Geral',
-    ticketPrice: 20.00,
-    raisedAmount: 4040,
-    goalAmount: 10000,
-    daysLeft: 73,
-  },
-  {
-    id: 6,
-    title: 'Rifa do edi',
-    description: 'Pessoal, estamos realizando uma rifa solidária para ajudar meu pai, que é autônomo e está há mais de 20 dias.',
-    imageUrl: 'https://images.unsplash.com/photo-1627095362432-5a336f0e4b85?w=500&q=80',
-    category: 'Para a sua casa',
-    ticketPrice: 20.00,
-    raisedAmount: 3700,
-    goalAmount: 4000,
-    daysLeft: 8,
-  }
+  { id: 1, title: 'Ajuda para o Hospital do Câncer', imageUrl: 'https://picsum.photos/seed/1/400/300', category: 'Saúde', raisedAmount: 7500, goalAmount: 10000, ticketPrice: 10, daysLeft: 15 },
+  { id: 2, title: 'Construção da Creche Comunitária', imageUrl: 'https://picsum.photos/seed/2/400/300', category: 'Educação', raisedAmount: 12000, goalAmount: 20000, ticketPrice: 15, daysLeft: 30 },
+  { id: 3, title: 'Cadeira de Rodas para o Sr. João', imageUrl: 'https://picsum.photos/seed/3/400/300', category: 'Causa Pessoal', raisedAmount: 1500, goalAmount: 2000, ticketPrice: 5, daysLeft: 5 },
+  { id: 4, title: 'Castração de Animais de Rua', imageUrl: 'https://picsum.photos/seed/4/400/300', category: 'Causa Animal', raisedAmount: 4800, goalAmount: 5000, ticketPrice: 8, daysLeft: 12 },
+  { id: 5, title: 'Reforma do Asilo Recanto Feliz', imageUrl: 'https://picsum.photos/seed/5/400/300', category: 'Ação Social', raisedAmount: 25000, goalAmount: 30000, ticketPrice: 20, daysLeft: 45 },
+  { id: 6, title: 'Viagem de Formatura da Turma 9', imageUrl: 'https://picsum.photos/seed/6/400/300', category: 'Educação', raisedAmount: 3000, goalAmount: 8000, ticketPrice: 25, daysLeft: 20 },
+  { id: 7, title: 'Tratamento Dentário para a Maria', imageUrl: 'https://picsum.photos/seed/7/400/300', category: 'Causa Pessoal', raisedAmount: 1800, goalAmount: 1800, ticketPrice: 10, daysLeft: 2 },
+  { id: 8, title: 'Kit Esportivo para Crianças Carentes', imageUrl: 'https://picsum.photos/seed/8/400/300', category: 'Ação Social', raisedAmount: 6000, goalAmount: 7000, ticketPrice: 12, daysLeft: 18 },
+];
+
+export const CATEGORIES: Category[] = [
+    { id: 1, name: 'Saúde', description: 'Rifas para tratamentos médicos, hospitais, etc.' },
+    { id: 2, name: 'Educação', description: 'Rifas para escolas, material escolar, etc.' },
+    { id: 3, name: 'Causa Pessoal', description: 'Rifas para ajudar indivíduos com necessidades específicas.' },
+    { id: 4, name: 'Causa Animal', description: 'Rifas para abrigos, castração, e cuidados com animais.' },
+    { id: 5, name: 'Ação Social', description: 'Rifas para comunidades, asilos, e projetos sociais.' },
+];
+
+export const USERS: User[] = [
+    { id: 1, name: 'Admin', email: 'admin@rifa10.com', role: 'Admin', createdAt: '2023-01-15T10:00:00Z' },
+    { id: 2, name: 'Ana Silva', email: 'ana.silva@example.com', role: 'User', createdAt: '2023-02-20T11:30:00Z' },
+    { id: 3, name: 'Carlos Souza', email: 'carlos.souza@example.com', role: 'User', createdAt: '2023-03-10T15:45:00Z' },
+];
+
+export const COLLABORATIONS: Collaboration[] = [
+    { id: 1, collaboratorName: 'Empresa X', raffleId: 1, ticketsSold: 100, amountRaised: 1000 },
+    { id: 2, collaboratorName: 'Loja Y', raffleId: 2, ticketsSold: 50, amountRaised: 750 },
+    { id: 3, collaboratorName: 'Influencer Z', raffleId: 4, ticketsSold: 200, amountRaised: 1600 },
+];
+
+export const RANKING_DATA: RankingEntry[] = [
+    { id: 1, buyerName: 'João Pereira', raffleId: 1, ticketsBought: 50 },
+    { id: 2, buyerName: 'Maria Oliveira', raffleId: 2, ticketsBought: 45 },
+    { id: 3, buyerName: 'Pedro Costa', raffleId: 1, ticketsBought: 42 },
+    { id: 4, buyerName: 'Sofia Martins', raffleId: 4, ticketsBought: 38 },
 ];
