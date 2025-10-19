@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RIFA10 - Sua Plataforma de Rifas</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --brand-green: #059669; /* emerald-600 */
+      --brand-gold: #F59E0B; /* amber-500 */
+      --brand-dark-charcoal: #1F2937; /* gray-800 */
+      --brand-light-gray: #F9FAFB; /* gray-50 */
+    }
+    .prose h2 { color: var(--brand-green); }
+  </style>
+  <script type="importmap">
+  {
+    "imports": {
+      "react": "https://aistudiocdn.com/react@^19.2.0",
+      "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+      "react/": "https://aistudiocdn.com/react@^19.2.0/"
+    }
+  }
+  </script>
+</head>
+<body class="bg-brand-light-gray">
+  <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
